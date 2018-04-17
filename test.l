@@ -1,3 +1,4 @@
+//这是flex的测试代码
 %{
 #include <stdio.h>
 %}
