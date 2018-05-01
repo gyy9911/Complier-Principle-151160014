@@ -4,7 +4,7 @@
 	#include <stdio.h>
 	#include <string.h>
 	#include "syntax.tab.h"
-
+//语法树节点
 	struct Node{
 		int isToken;
 		int line;
@@ -32,7 +32,7 @@ float		[-+]?(([0-9]*\.[0-9]+)|([0-9]+\.[0-9]*))
 relop		>|<|>=|<=|==|!=
 
 %%
-{ws}		{/*no action and no return*/}
+{ws}	{/*no action and no return*/}
 struct		{setNode("STRUCT",yytext);return(STRUCT);}
 return		{setNode("RETURN",yytext);return(RETURN);}
 if		{setNode("IF",yytext);return(IF);}
@@ -62,11 +62,12 @@ while		{setNode("WHILE",yytext);return(WHILE);}
 "]"		{setNode("RB",yytext);return RB;}
 "{"		{setNode("LC",yytext);return LC;}
 "}"		{setNode("RC",yytext);return RC;}
-.		{printf("Error type A at line %d: Mysterious character \'%s\'\n", yylineno, yytext);}
+.		{printf("Error: type A at line %d: Mysterious character \'%s\'\n", yylineno, yytext);}
 
 %%
 
-void setNode(char *type,char *text){
+void setNode(char *type,char *text)
+{
 	yylval.node = (struct Node *)malloc(sizeof(struct Node));
 	yylval.node->isToken = 1;
 	yylval.node->line = yylineno;

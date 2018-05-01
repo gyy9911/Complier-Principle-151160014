@@ -551,7 +551,7 @@ char *yytext;
 	#include <stdio.h>
 	#include <string.h>
 	#include "syntax.tab.h"
-
+//语法树节点
 	struct Node{
 		int isToken;
 		int line;
@@ -1005,7 +1005,7 @@ YY_RULE_SETUP
 case 31:
 YY_RULE_SETUP
 #line 65 "lexical.l"
-{printf("Error type A at line %d: Mysterious character \'%s\'\n", yylineno, yytext);}
+{printf("Error: type A at line %d: Mysterious character \'%s\'\n", yylineno, yytext);}
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
@@ -2029,7 +2029,8 @@ void yyfree (void * ptr )
 
 
 
-void setNode(char *type,char *text){
+void setNode(char *type,char *text)
+{
 	yylval.node = (struct Node *)malloc(sizeof(struct Node));
 	yylval.node->isToken = 1;
 	yylval.node->line = yylineno;

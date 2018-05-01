@@ -7,3 +7,4 @@ make clean:
 	rm syntax.tab.c
 	rm syntax.tab.h
 	rm complier
+

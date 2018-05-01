@@ -5,13 +5,14 @@ extern int yylineno;
 extern int isError;
 int main(int argc, char** argv) 
 { 
-  	if (argc < 1){
-		printf("Usage:./parser + filename + filename ...!!\n");
+  	if (argc < 1)
+	{
+		printf("Use command:./complier + filename + filename ...\n");
 		return 1;
 	}
 	int i;
 	for( i = 1 ; i < argc ; i++){
-		printf("The result of compilering file: %s:\n",argv[i]);
+		printf("The result of %s:\n",argv[i]);
 		root = NULL;
 		isError = 0;
 		yylineno = 1;

@@ -6,24 +6,24 @@
 	#include "lex.yy.c"
 	
 	struct Node *root;
-	struct Node *addToTree(char *type,int num,...);
+	struct Node* addToTree(char *type,int num,...);
 
 	void printTree(struct Node *p,int depth);
-	int myatoi(char* ch);
+	int _(char* ch);
 
-	int isError;
-	
+	int isError;//是否有词法或语法错误
 %}
 
-/*declared types*/
+//定义类型
+//node的定义在.l中
 %union{struct Node *node;}
-/*declared tokens*/
+//终结符
 %token <node>INT FLOAT TYPE ID SEMI COMMA
 %right <node>ASSIGNOP NOT
 %left  <node>PLUS MINUS STAR DIV RELOP AND OR 
 %left  <node>DOT LP RP LB RB LC RC
 %nonassoc <node>STRUCT RETURN IF ELSE WHILE
-/*declared non-terminals*/
+//非终结符
 %type <node>Program ExtDefList ExtDef ExtDecList
 %type <node>Specifier StructSpecifier OptTag Tag
 %type <node>VarDec FunDec VarList ParamDec
@@ -47,6 +47,8 @@ ExtDef		:	Specifier ExtDecList SEMI	{$$=addToTree("ExtDef",3,$1,$2,$3);}
 ExtDecList	:	VarDec				{$$=addToTree("ExtDecList",1,$1);}
 		|	VarDec COMMA ExtDecList		{$$=addToTree("ExtDecList",3,$1,$2,$3);}
 		;
+
+
 Specifier	:	TYPE				{$$=addToTree("Specifier",1,$1);}
 		|	StructSpecifier			{$$=addToTree("Specifier",1,$1);}		
 		;
@@ -58,6 +60,8 @@ OptTag		:	ID				{$$=addToTree("OptTag",1,$1);}
 		;
 Tag		:	ID				{$$=addToTree("Tag",1,$1);}
 		;
+
+
 VarDec		:	ID				{$$=addToTree("VarDec",1,$1);}
 		|	VarDec LB INT RB		{$$=addToTree("VarDec",4,$1,$2,$3,$4);}
 		;
@@ -72,6 +76,8 @@ ParamDec	:	Specifier VarDec		{$$=addToTree("ParamDec",2,$1,$2);}
 		|	error COMMA			{isError = 1;} 
 		|	error RB			{isError = 1;} 
 		;
+
+
 CompSt		:	LC DefList StmtList RC		{$$=addToTree("CompSt",4,$1,$2,$3,$4);}
 		|	error RC			{isError = 1;}
 		;
@@ -86,6 +92,8 @@ Stmt		:	Exp SEMI			{$$=addToTree("Stmt",2,$1,$2);}
 		|	error SEMI			{isError = 1;}
 		;
 
+
+
 DefList		:	Def DefList			{$$=addToTree("DefList",2,$1,$2);}
 		|	/*empty*/			{$$=NULL;}
 		;
@@ -99,6 +107,8 @@ DecList		:	Dec				{$$=addToTree("DecList",1,$1);}
 Dec		:	VarDec				{$$=addToTree("Dec",1,$1);}
 		|	VarDec ASSIGNOP	Exp		{$$=addToTree("Dec",3,$1,$2,$3);}
 		;
+
+
 Exp		:	Exp ASSIGNOP Exp		{$$=addToTree("Exp",3,$1,$2,$3);}
 		|	Exp AND Exp			{$$=addToTree("Exp",3,$1,$2,$3);}
 		|	Exp OR Exp			{$$=addToTree("Exp",3,$1,$2,$3);}
@@ -125,22 +135,26 @@ Args		:	Exp COMMA Args			{$$=addToTree("Args",3,$1,$2,$3);}
 %%
 
 
-yyerror(char* msg){
-	fprintf(stderr,"Error type B at line %d:%s\n",yylineno,msg);
+yyerror(char* msg)
+{
+	fprintf(stderr,"Error: type B at line %d:%s\n",yylineno,msg);
 }
 
-struct Node *addToTree(char *type,int num,...){
-	struct Node *current = (struct Node *)malloc(sizeof(struct Node));
+struct Node* addToTree(char *type,int num,...)
+{
+	struct Node *current = (struct Node *)malloc(sizeof(struct Node));//当前节点
 	struct Node *temp = (struct Node *)malloc(sizeof(struct Node));
 	current->isToken = 0;
 	va_list nodeList;
-	va_start(nodeList,num);
+	va_start(nodeList,num);//获取可变参数
 	temp = va_arg(nodeList,struct Node*);
 	current->line = temp->line;
 	strcpy(current->type,type);
 	current->firstChild = temp;
+
 	int i;
-	for(i = 1 ; i < num ; i++){
+	for(i = 1 ; i < num ; i++)
+	{
 		temp->nextSibling = va_arg(nodeList,struct Node*);
 		if(temp->nextSibling != NULL)
 			temp = temp->nextSibling;
@@ -150,19 +164,22 @@ struct Node *addToTree(char *type,int num,...){
 	return current;
 }
 
-void printTree(struct Node *p,int depth){
+void printTree(struct Node *p,int depth)
+{
 	
 	if(p == NULL) return;
 	int i;
 	for(i = 0 ; i < depth ; i++)
 		printf("  ");
-	if(!p->isToken){
+	if(!p->isToken)
+	{
 		printf("%s (%d)\n", p->type, p->line);
 		printTree(p->firstChild , depth+1);
 	}
-	else{
+	else
+	{
 		if(strcmp(p->type,"INT") == 0)
-			printf("%s: %d\n", p->type, myatoi(p->text));
+			printf("%s: %d\n", p->type, atoi_816(p->text));
 		else if(strcmp(p->type,"FLOAT") == 0)
 			printf("%s: %f\n", p->type, atof(p->text));
 		else if(strcmp(p->type,"TYPE") == 0 || strcmp(p->type,"ID") == 0)
@@ -173,12 +190,14 @@ void printTree(struct Node *p,int depth){
 	printTree(p->nextSibling , depth);
 }
 
-
-int myatoi(char* ch){
+//支持8及16进制
+int atoi_816(char* ch)
+{
 	char *p = ch; 
 	if(strlen(ch) <= 1)
 		return atoi(ch);
-	else if(p[0] == '0'){
+	else if(p[0] == '0')
+	{
 		if(p[1] == 'x' || p[1] == 'X')
 			return (int)strtoul(ch+2, 0, 16);
 		else	
