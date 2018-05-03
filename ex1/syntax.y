@@ -9,10 +9,11 @@
 	struct Node* newNode(char *type,int num,...);
 
 	void printTree(struct Node *p,int depth);
-	int _(char* ch);
-
+	//int _(char* ch);
+	
 	int isError;//是否有词法或语法错误
 %}
+%define parse.error verbose//
 
 //定义类型
 //node的定义在.l中
@@ -138,6 +139,7 @@ Args		:	Exp COMMA Args			{$$=newNode("Args",3,$1,$2,$3);}
 yyerror(char* msg)
 {
 	fprintf(stderr,"Error: type B at line %d:%s\n",yylineno,msg);
+
 }
 
 struct Node* newNode(char *type,int num,...)

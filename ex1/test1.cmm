@@ -1,6 +1,5 @@
-int i;
-while(b==1
+int main()
 {
-
-    a=b;
+    int i=1
+    int j=~2;
 }

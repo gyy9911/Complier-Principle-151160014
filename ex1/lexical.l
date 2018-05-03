@@ -6,7 +6,7 @@
 	#include "syntax.tab.h"
 //语法树节点
 	struct Node{
-		int isToken;
+		int isToken;//是否为终结符
 		int line;
 		int column;
 		char type[16];
@@ -26,8 +26,6 @@ digit		[0-9]
 type		int|float
 id		({letter}|_)({letter}|{digit}|_)*
 int		[0]|[1-9][0-9]*
-int8		[0][1-7][0-7]*
-int16		[0][xX][1-9A-Fa-f][0-9A-Fa-f]*
 float		[-+]?(([0-9]*\.[0-9]+)|([0-9]+\.[0-9]*))
 relop		>|<|>=|<=|==|!=
 
