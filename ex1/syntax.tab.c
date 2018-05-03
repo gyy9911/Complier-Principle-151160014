@@ -71,7 +71,7 @@
 	#include "lex.yy.c"
 	
 	struct Node *root;
-	struct Node* addToTree(char *type,int num,...);
+	struct Node* newNode(char *type,int num,...);
 
 	void printTree(struct Node *p,int depth);
 	int _(char* ch);
@@ -1346,13 +1346,13 @@ yyreduce:
     {
         case 2:
 #line 37 "syntax.y" /* yacc.c:1646  */
-    {(yyval.node)=addToTree("Program",1,(yyvsp[0].node));root=(yyval.node);}
+    {(yyval.node)=newNode("Program",1,(yyvsp[0].node));root=(yyval.node);}
 #line 1351 "syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 3:
 #line 39 "syntax.y" /* yacc.c:1646  */
-    {(yyval.node)=addToTree("ExtDefList",2,(yyvsp[-1].node),(yyvsp[0].node));}
+    {(yyval.node)=newNode("ExtDefList",2,(yyvsp[-1].node),(yyvsp[0].node));}
 #line 1357 "syntax.tab.c" /* yacc.c:1646  */
     break;
 
@@ -1364,19 +1364,19 @@ yyreduce:
 
   case 5:
 #line 42 "syntax.y" /* yacc.c:1646  */
-    {(yyval.node)=addToTree("ExtDef",3,(yyvsp[-2].node),(yyvsp[-1].node),(yyvsp[0].node));}
+    {(yyval.node)=newNode("ExtDef",3,(yyvsp[-2].node),(yyvsp[-1].node),(yyvsp[0].node));}
 #line 1369 "syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 6:
 #line 43 "syntax.y" /* yacc.c:1646  */
-    {(yyval.node)=addToTree("ExtDef",2,(yyvsp[-1].node),(yyvsp[0].node));}
+    {(yyval.node)=newNode("ExtDef",2,(yyvsp[-1].node),(yyvsp[0].node));}
 #line 1375 "syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 7:
 #line 44 "syntax.y" /* yacc.c:1646  */
-    {(yyval.node)=addToTree("ExtDef",3,(yyvsp[-2].node),(yyvsp[-1].node),(yyvsp[0].node));}
+    {(yyval.node)=newNode("ExtDef",3,(yyvsp[-2].node),(yyvsp[-1].node),(yyvsp[0].node));}
 #line 1381 "syntax.tab.c" /* yacc.c:1646  */
     break;
 
@@ -1388,43 +1388,43 @@ yyreduce:
 
   case 9:
 #line 47 "syntax.y" /* yacc.c:1646  */
-    {(yyval.node)=addToTree("ExtDecList",1,(yyvsp[0].node));}
+    {(yyval.node)=newNode("ExtDecList",1,(yyvsp[0].node));}
 #line 1393 "syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 10:
 #line 48 "syntax.y" /* yacc.c:1646  */
-    {(yyval.node)=addToTree("ExtDecList",3,(yyvsp[-2].node),(yyvsp[-1].node),(yyvsp[0].node));}
+    {(yyval.node)=newNode("ExtDecList",3,(yyvsp[-2].node),(yyvsp[-1].node),(yyvsp[0].node));}
 #line 1399 "syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 11:
 #line 52 "syntax.y" /* yacc.c:1646  */
-    {(yyval.node)=addToTree("Specifier",1,(yyvsp[0].node));}
+    {(yyval.node)=newNode("Specifier",1,(yyvsp[0].node));}
 #line 1405 "syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 12:
 #line 53 "syntax.y" /* yacc.c:1646  */
-    {(yyval.node)=addToTree("Specifier",1,(yyvsp[0].node));}
+    {(yyval.node)=newNode("Specifier",1,(yyvsp[0].node));}
 #line 1411 "syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 13:
 #line 55 "syntax.y" /* yacc.c:1646  */
-    {(yyval.node)=addToTree("StructSpecifier",5,(yyvsp[-4].node),(yyvsp[-3].node),(yyvsp[-2].node),(yyvsp[-1].node),(yyvsp[0].node));}
+    {(yyval.node)=newNode("StructSpecifier",5,(yyvsp[-4].node),(yyvsp[-3].node),(yyvsp[-2].node),(yyvsp[-1].node),(yyvsp[0].node));}
 #line 1417 "syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 14:
 #line 56 "syntax.y" /* yacc.c:1646  */
-    {(yyval.node)=addToTree("StructSpecifier",2,(yyvsp[-1].node),(yyvsp[0].node));}
+    {(yyval.node)=newNode("StructSpecifier",2,(yyvsp[-1].node),(yyvsp[0].node));}
 #line 1423 "syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 15:
 #line 58 "syntax.y" /* yacc.c:1646  */
-    {(yyval.node)=addToTree("OptTag",1,(yyvsp[0].node));}
+    {(yyval.node)=newNode("OptTag",1,(yyvsp[0].node));}
 #line 1429 "syntax.tab.c" /* yacc.c:1646  */
     break;
 
@@ -1436,31 +1436,31 @@ yyreduce:
 
   case 17:
 #line 61 "syntax.y" /* yacc.c:1646  */
-    {(yyval.node)=addToTree("Tag",1,(yyvsp[0].node));}
+    {(yyval.node)=newNode("Tag",1,(yyvsp[0].node));}
 #line 1441 "syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 18:
 #line 65 "syntax.y" /* yacc.c:1646  */
-    {(yyval.node)=addToTree("VarDec",1,(yyvsp[0].node));}
+    {(yyval.node)=newNode("VarDec",1,(yyvsp[0].node));}
 #line 1447 "syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 19:
 #line 66 "syntax.y" /* yacc.c:1646  */
-    {(yyval.node)=addToTree("VarDec",4,(yyvsp[-3].node),(yyvsp[-2].node),(yyvsp[-1].node),(yyvsp[0].node));}
+    {(yyval.node)=newNode("VarDec",4,(yyvsp[-3].node),(yyvsp[-2].node),(yyvsp[-1].node),(yyvsp[0].node));}
 #line 1453 "syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 20:
 #line 68 "syntax.y" /* yacc.c:1646  */
-    {(yyval.node)=addToTree("FunDec",4,(yyvsp[-3].node),(yyvsp[-2].node),(yyvsp[-1].node),(yyvsp[0].node));}
+    {(yyval.node)=newNode("FunDec",4,(yyvsp[-3].node),(yyvsp[-2].node),(yyvsp[-1].node),(yyvsp[0].node));}
 #line 1459 "syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 21:
 #line 69 "syntax.y" /* yacc.c:1646  */
-    {(yyval.node)=addToTree("FunDec",3,(yyvsp[-2].node),(yyvsp[-1].node),(yyvsp[0].node));}
+    {(yyval.node)=newNode("FunDec",3,(yyvsp[-2].node),(yyvsp[-1].node),(yyvsp[0].node));}
 #line 1465 "syntax.tab.c" /* yacc.c:1646  */
     break;
 
@@ -1472,19 +1472,19 @@ yyreduce:
 
   case 23:
 #line 72 "syntax.y" /* yacc.c:1646  */
-    {(yyval.node)=addToTree("VarList",3,(yyvsp[-2].node),(yyvsp[-1].node),(yyvsp[0].node));}
+    {(yyval.node)=newNode("VarList",3,(yyvsp[-2].node),(yyvsp[-1].node),(yyvsp[0].node));}
 #line 1477 "syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 24:
 #line 73 "syntax.y" /* yacc.c:1646  */
-    {(yyval.node)=addToTree("VarList",1,(yyvsp[0].node));}
+    {(yyval.node)=newNode("VarList",1,(yyvsp[0].node));}
 #line 1483 "syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 25:
 #line 75 "syntax.y" /* yacc.c:1646  */
-    {(yyval.node)=addToTree("ParamDec",2,(yyvsp[-1].node),(yyvsp[0].node));}
+    {(yyval.node)=newNode("ParamDec",2,(yyvsp[-1].node),(yyvsp[0].node));}
 #line 1489 "syntax.tab.c" /* yacc.c:1646  */
     break;
 
@@ -1502,7 +1502,7 @@ yyreduce:
 
   case 28:
 #line 81 "syntax.y" /* yacc.c:1646  */
-    {(yyval.node)=addToTree("CompSt",4,(yyvsp[-3].node),(yyvsp[-2].node),(yyvsp[-1].node),(yyvsp[0].node));}
+    {(yyval.node)=newNode("CompSt",4,(yyvsp[-3].node),(yyvsp[-2].node),(yyvsp[-1].node),(yyvsp[0].node));}
 #line 1507 "syntax.tab.c" /* yacc.c:1646  */
     break;
 
@@ -1514,7 +1514,7 @@ yyreduce:
 
   case 30:
 #line 84 "syntax.y" /* yacc.c:1646  */
-    {(yyval.node)=addToTree("StmtList",2,(yyvsp[-1].node),(yyvsp[0].node));}
+    {(yyval.node)=newNode("StmtList",2,(yyvsp[-1].node),(yyvsp[0].node));}
 #line 1519 "syntax.tab.c" /* yacc.c:1646  */
     break;
 
@@ -1526,31 +1526,31 @@ yyreduce:
 
   case 32:
 #line 87 "syntax.y" /* yacc.c:1646  */
-    {(yyval.node)=addToTree("Stmt",2,(yyvsp[-1].node),(yyvsp[0].node));}
+    {(yyval.node)=newNode("Stmt",2,(yyvsp[-1].node),(yyvsp[0].node));}
 #line 1531 "syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 33:
 #line 88 "syntax.y" /* yacc.c:1646  */
-    {(yyval.node)=addToTree("Stmt",1,(yyvsp[0].node));}
+    {(yyval.node)=newNode("Stmt",1,(yyvsp[0].node));}
 #line 1537 "syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 34:
 #line 89 "syntax.y" /* yacc.c:1646  */
-    {(yyval.node)=addToTree("Stmt",3,(yyvsp[-2].node),(yyvsp[-1].node),(yyvsp[0].node));}
+    {(yyval.node)=newNode("Stmt",3,(yyvsp[-2].node),(yyvsp[-1].node),(yyvsp[0].node));}
 #line 1543 "syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 35:
 #line 90 "syntax.y" /* yacc.c:1646  */
-    {(yyval.node)=addToTree("Stmt",7,(yyvsp[-6].node),(yyvsp[-5].node),(yyvsp[-4].node),(yyvsp[-3].node),(yyvsp[-2].node),(yyvsp[-1].node),(yyvsp[0].node));}
+    {(yyval.node)=newNode("Stmt",7,(yyvsp[-6].node),(yyvsp[-5].node),(yyvsp[-4].node),(yyvsp[-3].node),(yyvsp[-2].node),(yyvsp[-1].node),(yyvsp[0].node));}
 #line 1549 "syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 36:
 #line 91 "syntax.y" /* yacc.c:1646  */
-    {(yyval.node)=addToTree("Stmt",5,(yyvsp[-4].node),(yyvsp[-3].node),(yyvsp[-2].node),(yyvsp[-1].node),(yyvsp[0].node));}
+    {(yyval.node)=newNode("Stmt",5,(yyvsp[-4].node),(yyvsp[-3].node),(yyvsp[-2].node),(yyvsp[-1].node),(yyvsp[0].node));}
 #line 1555 "syntax.tab.c" /* yacc.c:1646  */
     break;
 
@@ -1562,7 +1562,7 @@ yyreduce:
 
   case 38:
 #line 97 "syntax.y" /* yacc.c:1646  */
-    {(yyval.node)=addToTree("DefList",2,(yyvsp[-1].node),(yyvsp[0].node));}
+    {(yyval.node)=newNode("DefList",2,(yyvsp[-1].node),(yyvsp[0].node));}
 #line 1567 "syntax.tab.c" /* yacc.c:1646  */
     break;
 
@@ -1574,7 +1574,7 @@ yyreduce:
 
   case 40:
 #line 100 "syntax.y" /* yacc.c:1646  */
-    {(yyval.node)=addToTree("Def",3,(yyvsp[-2].node),(yyvsp[-1].node),(yyvsp[0].node));}
+    {(yyval.node)=newNode("Def",3,(yyvsp[-2].node),(yyvsp[-1].node),(yyvsp[0].node));}
 #line 1579 "syntax.tab.c" /* yacc.c:1646  */
     break;
 
@@ -1586,145 +1586,145 @@ yyreduce:
 
   case 42:
 #line 103 "syntax.y" /* yacc.c:1646  */
-    {(yyval.node)=addToTree("DecList",1,(yyvsp[0].node));}
+    {(yyval.node)=newNode("DecList",1,(yyvsp[0].node));}
 #line 1591 "syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 43:
 #line 104 "syntax.y" /* yacc.c:1646  */
-    {(yyval.node)=addToTree("DecList",3,(yyvsp[-2].node),(yyvsp[-1].node),(yyvsp[0].node));}
+    {(yyval.node)=newNode("DecList",3,(yyvsp[-2].node),(yyvsp[-1].node),(yyvsp[0].node));}
 #line 1597 "syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 44:
 #line 107 "syntax.y" /* yacc.c:1646  */
-    {(yyval.node)=addToTree("Dec",1,(yyvsp[0].node));}
+    {(yyval.node)=newNode("Dec",1,(yyvsp[0].node));}
 #line 1603 "syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 45:
 #line 108 "syntax.y" /* yacc.c:1646  */
-    {(yyval.node)=addToTree("Dec",3,(yyvsp[-2].node),(yyvsp[-1].node),(yyvsp[0].node));}
+    {(yyval.node)=newNode("Dec",3,(yyvsp[-2].node),(yyvsp[-1].node),(yyvsp[0].node));}
 #line 1609 "syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 46:
 #line 112 "syntax.y" /* yacc.c:1646  */
-    {(yyval.node)=addToTree("Exp",3,(yyvsp[-2].node),(yyvsp[-1].node),(yyvsp[0].node));}
+    {(yyval.node)=newNode("Exp",3,(yyvsp[-2].node),(yyvsp[-1].node),(yyvsp[0].node));}
 #line 1615 "syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 47:
 #line 113 "syntax.y" /* yacc.c:1646  */
-    {(yyval.node)=addToTree("Exp",3,(yyvsp[-2].node),(yyvsp[-1].node),(yyvsp[0].node));}
+    {(yyval.node)=newNode("Exp",3,(yyvsp[-2].node),(yyvsp[-1].node),(yyvsp[0].node));}
 #line 1621 "syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 48:
 #line 114 "syntax.y" /* yacc.c:1646  */
-    {(yyval.node)=addToTree("Exp",3,(yyvsp[-2].node),(yyvsp[-1].node),(yyvsp[0].node));}
+    {(yyval.node)=newNode("Exp",3,(yyvsp[-2].node),(yyvsp[-1].node),(yyvsp[0].node));}
 #line 1627 "syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 49:
 #line 115 "syntax.y" /* yacc.c:1646  */
-    {(yyval.node)=addToTree("Exp",3,(yyvsp[-2].node),(yyvsp[-1].node),(yyvsp[0].node));}
+    {(yyval.node)=newNode("Exp",3,(yyvsp[-2].node),(yyvsp[-1].node),(yyvsp[0].node));}
 #line 1633 "syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 50:
 #line 116 "syntax.y" /* yacc.c:1646  */
-    {(yyval.node)=addToTree("Exp",3,(yyvsp[-2].node),(yyvsp[-1].node),(yyvsp[0].node));}
+    {(yyval.node)=newNode("Exp",3,(yyvsp[-2].node),(yyvsp[-1].node),(yyvsp[0].node));}
 #line 1639 "syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 51:
 #line 117 "syntax.y" /* yacc.c:1646  */
-    {(yyval.node)=addToTree("Exp",3,(yyvsp[-2].node),(yyvsp[-1].node),(yyvsp[0].node));}
+    {(yyval.node)=newNode("Exp",3,(yyvsp[-2].node),(yyvsp[-1].node),(yyvsp[0].node));}
 #line 1645 "syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 52:
 #line 118 "syntax.y" /* yacc.c:1646  */
-    {(yyval.node)=addToTree("Exp",3,(yyvsp[-2].node),(yyvsp[-1].node),(yyvsp[0].node));}
+    {(yyval.node)=newNode("Exp",3,(yyvsp[-2].node),(yyvsp[-1].node),(yyvsp[0].node));}
 #line 1651 "syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 53:
 #line 119 "syntax.y" /* yacc.c:1646  */
-    {(yyval.node)=addToTree("Exp",3,(yyvsp[-2].node),(yyvsp[-1].node),(yyvsp[0].node));}
+    {(yyval.node)=newNode("Exp",3,(yyvsp[-2].node),(yyvsp[-1].node),(yyvsp[0].node));}
 #line 1657 "syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 54:
 #line 120 "syntax.y" /* yacc.c:1646  */
-    {(yyval.node)=addToTree("Exp",3,(yyvsp[-2].node),(yyvsp[-1].node),(yyvsp[0].node));}
+    {(yyval.node)=newNode("Exp",3,(yyvsp[-2].node),(yyvsp[-1].node),(yyvsp[0].node));}
 #line 1663 "syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 55:
 #line 121 "syntax.y" /* yacc.c:1646  */
-    {(yyval.node)=addToTree("Exp",2,(yyvsp[-1].node),(yyvsp[0].node));}
+    {(yyval.node)=newNode("Exp",2,(yyvsp[-1].node),(yyvsp[0].node));}
 #line 1669 "syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 56:
 #line 122 "syntax.y" /* yacc.c:1646  */
-    {(yyval.node)=addToTree("Exp",2,(yyvsp[-1].node),(yyvsp[0].node));}
+    {(yyval.node)=newNode("Exp",2,(yyvsp[-1].node),(yyvsp[0].node));}
 #line 1675 "syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 57:
 #line 123 "syntax.y" /* yacc.c:1646  */
-    {(yyval.node)=addToTree("Exp",4,(yyvsp[-3].node),(yyvsp[-2].node),(yyvsp[-1].node),(yyvsp[0].node));}
+    {(yyval.node)=newNode("Exp",4,(yyvsp[-3].node),(yyvsp[-2].node),(yyvsp[-1].node),(yyvsp[0].node));}
 #line 1681 "syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 58:
 #line 124 "syntax.y" /* yacc.c:1646  */
-    {(yyval.node)=addToTree("Exp",3,(yyvsp[-2].node),(yyvsp[-1].node),(yyvsp[0].node));}
+    {(yyval.node)=newNode("Exp",3,(yyvsp[-2].node),(yyvsp[-1].node),(yyvsp[0].node));}
 #line 1687 "syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 59:
 #line 125 "syntax.y" /* yacc.c:1646  */
-    {(yyval.node)=addToTree("Exp",4,(yyvsp[-3].node),(yyvsp[-2].node),(yyvsp[-1].node),(yyvsp[0].node));}
+    {(yyval.node)=newNode("Exp",4,(yyvsp[-3].node),(yyvsp[-2].node),(yyvsp[-1].node),(yyvsp[0].node));}
 #line 1693 "syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 60:
 #line 126 "syntax.y" /* yacc.c:1646  */
-    {(yyval.node)=addToTree("Exp",3,(yyvsp[-2].node),(yyvsp[-1].node),(yyvsp[0].node));}
+    {(yyval.node)=newNode("Exp",3,(yyvsp[-2].node),(yyvsp[-1].node),(yyvsp[0].node));}
 #line 1699 "syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 61:
 #line 127 "syntax.y" /* yacc.c:1646  */
-    {(yyval.node)=addToTree("Exp",1,(yyvsp[0].node));}
+    {(yyval.node)=newNode("Exp",1,(yyvsp[0].node));}
 #line 1705 "syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 62:
 #line 128 "syntax.y" /* yacc.c:1646  */
-    {(yyval.node)=addToTree("Exp",1,(yyvsp[0].node));}
+    {(yyval.node)=newNode("Exp",1,(yyvsp[0].node));}
 #line 1711 "syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 63:
 #line 129 "syntax.y" /* yacc.c:1646  */
-    {(yyval.node)=addToTree("Exp",1,(yyvsp[0].node));}
+    {(yyval.node)=newNode("Exp",1,(yyvsp[0].node));}
 #line 1717 "syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 64:
 #line 131 "syntax.y" /* yacc.c:1646  */
-    {(yyval.node)=addToTree("Args",3,(yyvsp[-2].node),(yyvsp[-1].node),(yyvsp[0].node));}
+    {(yyval.node)=newNode("Args",3,(yyvsp[-2].node),(yyvsp[-1].node),(yyvsp[0].node));}
 #line 1723 "syntax.tab.c" /* yacc.c:1646  */
     break;
 
   case 65:
 #line 132 "syntax.y" /* yacc.c:1646  */
-    {(yyval.node)=addToTree("Args",1,(yyvsp[0].node));}
+    {(yyval.node)=newNode("Args",1,(yyvsp[0].node));}
 #line 1729 "syntax.tab.c" /* yacc.c:1646  */
     break;
 
@@ -1966,7 +1966,7 @@ yyerror(char* msg)
 	fprintf(stderr,"Error: type B at line %d:%s\n",yylineno,msg);
 }
 
-struct Node* addToTree(char *type,int num,...)
+struct Node* newNode(char *type,int num,...)
 {
 	struct Node *current = (struct Node *)malloc(sizeof(struct Node));//当前节点
 	struct Node *temp = (struct Node *)malloc(sizeof(struct Node));
@@ -2005,7 +2005,7 @@ void printTree(struct Node *p,int depth)
 	else
 	{
 		if(strcmp(p->type,"INT") == 0)
-			printf("%s: %d\n", p->type, atoi_816(p->text));
+			printf("%s: %d\n", p->type, atoi(p->text));
 		else if(strcmp(p->type,"FLOAT") == 0)
 			printf("%s: %f\n", p->type, atof(p->text));
 		else if(strcmp(p->type,"TYPE") == 0 || strcmp(p->type,"ID") == 0)
@@ -2016,21 +2016,5 @@ void printTree(struct Node *p,int depth)
 	printTree(p->nextSibling , depth);
 }
 
-//支持8及16进制
-int atoi_816(char* ch)
-{
-	char *p = ch; 
-	if(strlen(ch) <= 1)
-		return atoi(ch);
-	else if(p[0] == '0')
-	{
-		if(p[1] == 'x' || p[1] == 'X')
-			return (int)strtoul(ch+2, 0, 16);
-		else	
-			return (int)strtoul(ch+1, 0, 8);
-	}
-	else
-		return atoi(ch);
-}
 
 

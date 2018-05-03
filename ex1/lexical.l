@@ -40,8 +40,6 @@ else		{setNode("ELSE",yytext);return(ELSE);}
 while		{setNode("WHILE",yytext);return(WHILE);}
 {type}		{setNode("TYPE",yytext);return TYPE;}
 {int}		{setNode("INT",yytext);return INT;}
-{int8}		{setNode("INT",yytext);return INT;}
-{int16}		{setNode("INT",yytext);return INT;}
 {float}		{setNode("FLOAT",yytext);return FLOAT;}
 {id}		{setNode("ID",yytext);return ID;}
 {relop}		{setNode("RELOP",yytext);return RELOP;}
