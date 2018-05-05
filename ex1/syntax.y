@@ -9,9 +9,8 @@
 	struct Node* newNode(char *type,int num,...);
 
 	void printTree(struct Node *p,int depth);
-	//int _(char* ch);
 	
-	int isError;//是否有词法或语法错误
+	int isError=0;//是否有词法或语法错误
 %}
 %define parse.error verbose//
 
@@ -154,8 +153,7 @@ struct Node* newNode(char *type,int num,...)
 	strcpy(current->type,type);
 	current->firstChild = temp;
 
-	int i;
-	for(i = 1 ; i < num ; i++)
+	for(int i = 1 ; i < num ; i++)
 	{
 		temp->nextSibling = va_arg(nodeList,struct Node*);
 		if(temp->nextSibling != NULL)
@@ -170,8 +168,7 @@ void printTree(struct Node *p,int depth)
 {
 	
 	if(p == NULL) return;
-	int i;
-	for(i = 0 ; i < depth ; i++)
+	for(int i = 0 ; i < depth ; i++)
 		printf("  ");
 	if(!p->isToken)
 	{

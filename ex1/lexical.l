@@ -8,7 +8,6 @@
 	struct Node{
 		int isToken;//是否为终结符
 		int line;
-		int column;
 		char type[16];
 		char text[32];
 		struct Node *firstChild;
