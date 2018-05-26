@@ -41,10 +41,10 @@ typedef struct Type_ {
 }Type_;
 
 typedef struct FieldList_ {
-	char *name;
-	TypePtr type;
-	FieldList tail;
-	int collision;
+	char *name;     //变量/函数/结构名
+	TypePtr type;   //类型
+	FieldList tail; //指向结构体或链表的下一维度
+	int collision;  //hash值是否冲突
 }FieldList_;
 
 void traverseTree(Node *root);
