@@ -7,7 +7,7 @@
 #include <ctype.h>
 #include <stdarg.h>
 
-#define MAX_CHILD_NUM 6
+#define MAX_CHILD_NUM 7
 extern int yylineno;
 //抽象语法树
 typedef struct Abstract_Tree{

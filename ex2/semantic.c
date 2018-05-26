@@ -149,7 +149,7 @@ int TypeEqual(TypePtr type1,TypePtr type2)
 	}
 }
 
-FieldList VarDec(Node *root,TypePtr basictype)
+FieldList VarDec(Node *root,TypePtr basictype)//变量定义
 {
     Node *temp=root;
     int i=0;
@@ -169,7 +169,7 @@ FieldList VarDec(Node *root,TypePtr basictype)
         return field;
     }
     
-    switch(i){//allow 2 row array
+    switch(i){
         case 1:
         {
             TypePtr var1=(TypePtr)malloc(sizeof(Type_));
@@ -287,10 +287,11 @@ TypePtr Specifier(Node *root)
                 }
                 DefList=DefList->child[1];
             }
-            if(root->child[0]->child[1]!=NULL){//OptTag exist
+            if(root->child[0]->child[1]!=NULL)
+            {//OptTag 已存在
                 FieldList field=(FieldList )malloc(sizeof(FieldList_));
                 field->type=spe;
-                char *s=root->child[0]->child[1]->child[0]->text;//get the name of OptTag
+                char *s=root->child[0]->child[1]->child[0]->text;//取得OptTag名称
                 field->name=s;
                 if(lookupSymbol(field->name,0)!=NULL)
                     printf("Error type 16 at Line %d: Duplicated name \"%s\".\n",root->lineno,field->name);
@@ -523,8 +524,8 @@ TypePtr Exp(Node* root)
 	    }
     }
     else if(strcmp(root->child[1]->name,"ASSIGNOP")==0)
-    {
-        if(root->child[0]->childsum==1)
+    {//左值相关错误
+        if(root->child[0]->childsum==1)//ID
         {
             if(!(strcmp(root->child[0]->child[0]->name,"ID")==0))
             {
@@ -532,7 +533,7 @@ TypePtr Exp(Node* root)
                 return NULL;
             }
         }
-        else if(root->child[0]->childsum==3)
+        else if(root->child[0]->childsum==3)//Exp DOT ID
         {
             if(!((strcmp(root->child[0]->child[0]->name,"Exp")==0)&&(strcmp(root->child[0]->child[1]->name,"DOT")==0)&&(strcmp(root->child[0]->child[2]->name,"ID")==0)))
             {
@@ -540,7 +541,7 @@ TypePtr Exp(Node* root)
                 return NULL;
             }
         }
-        else if(root->child[0]->childsum==4)
+        else if(root->child[0]->childsum==4)//Exp LB Exp RB
         {
             if(!((strcmp(root->child[0]->child[0]->name,"Exp")==0)&&(strcmp(root->child[0]->child[1]->name,"LB")==0)&&(strcmp(root->child[0]->child[2]->name,"Exp")==0)&&(strcmp(root->child[0]->child[3]->name,"RB")==0)))
             {
@@ -592,7 +593,7 @@ TypePtr Exp(Node* root)
             }//Exp
             TypePtr tempType=Exp(temp->child[0]);
             FieldList tempField=(FieldList )malloc(sizeof(FieldList_));
-            tempField->name="no";//just for temp compare
+            tempField->name="no";//用于临时比较
 	        tempField->type=tempType;
             typ->u.function_.paramNum++;
             tempField->tail=typ->u.function_.params;

@@ -77,7 +77,7 @@ void traverseTree(Node *root)
 
     if(strcmp(root->name,"ExtDefList")==0)
     {
-        ExtDefList(root);
+        ExtDefList(root);//进行语义分析
         return;
     }
 

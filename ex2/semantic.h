@@ -27,13 +27,13 @@ typedef struct Type_ {
 		struct {
 			int size;
 			TypePtr elem;
-		}array_;
+		}array_;//数组
 
 		FieldList structure_;
 
 		struct{
-			FieldList params;//结构体中的参数
-			TypePtr funcType;
+			FieldList params;//函数的参数
+			TypePtr funcType;//返回值类型
 			int paramNum;//参数数量
 		}function_;
 
