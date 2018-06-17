@@ -8,53 +8,63 @@ extern void yyrestart(FILE *);
 extern int yyparse();
 extern int yylineo;
 
-Node* Root = NULL;
+Node *Root = NULL;
 int errorNum = 0;
 int theSameLine = 0;
 int semanticError = 0;
 int structError = 0;
 
-void myerror(char *msg){
-    if(theSameLine != yylineno){
-        printf("Error type B at line %d: %s\n", yylineno, msg);
-        theSameLine = yylineno;
-    }
+void myerror(char *msg)
+{
+	if (theSameLine != yylineno)
+	{
+		printf("Error type B at line %d: %s\n", yylineno, msg);
+		theSameLine = yylineno;
+	}
 }
 
-int main(int argc, char** argv){
+int main(int argc, char **argv)
+{
 	FILE *fp;
-	if(argc < 2){
-		printf("Format: ./parser test.cmm out.ir.\n\n");
-        return 1; 
-    }else{
-		fp = fopen(argv[1],"r");
+	if (argc < 2)
+	{
+		printf("使用以下命令: ./complier test.cmm out.ir.\n\n");
+		return 1;
 	}
-    if (!fp){
-		printf("cant't open the test file.\n\n");
-        perror(argv[1]);
-        return 1;
-    }
+	else
+	{
+		fp = fopen(argv[1], "r");
+	}
+	if (!fp)
+	{
+		printf("无法打开文件.\n\n");
+		perror(argv[1]);
+		return 1;
+	}
 
-    yylineno=1;
+	yylineno = 1;
 
-    yyrestart(fp);
-    yyparse();
+	yyrestart(fp);
+	yyparse();
 
-	if (structError == 0 && errorNum==0) {
+	if (structError == 0 && errorNum == 0)
+	{
 		initHashtable();
 		initIRList();
 		traverseTree(Root);
-		if(argc == 2){
+		if (argc == 2)
+		{
 			writeCode("stdout");
 		}
-		else if(argc == 3){
+		else if (argc == 3)
+		{
 			writeCode(argv[2]);
 		}
 	}
-	else {
-		printf("Cannot translate: Code contains variables or parameters of structure type.\n");
+	else
+	{
+		printf("error！\n");
 	}
 
-    return 0;
+	return 0;
 }
-

@@ -13,9 +13,11 @@ int IRlength;
 int IRcapacity;
 #define IRLIST_INIT_SIZE 10
 
-void initIRList() {
-	IRList = (InterCode*)malloc(IRLIST_INIT_SIZE * sizeof(InterCode));
-	if (IRList == NULL) {
+void initIRList()
+{
+	IRList = (InterCode *)malloc(IRLIST_INIT_SIZE * sizeof(InterCode));
+	if (IRList == NULL)
+	{
 		printf("IRList Error!\n");
 		return;
 	}
@@ -23,41 +25,49 @@ void initIRList() {
 	IRlength = 0;
 }
 
-void insertCode(InterCode ir) {
-	if (IRlength >= IRcapacity) {
-		IRList = (InterCode*)realloc(IRList, sizeof(InterCode)*IRcapacity * 2);
+void insertCode(InterCode ir)
+{
+	if (IRlength >= IRcapacity)
+	{
+		IRList = (InterCode *)realloc(IRList, sizeof(InterCode) * IRcapacity * 2);
 		IRcapacity = IRcapacity * 2;
 	}
 	IRList[IRlength] = ir;
 	IRlength++;
 }
 
-void writeCode(char *filename) {
-	optimize();
+void writeCode(char *filename)
+{
 	FILE *fp;
-	if (strcmp(filename, "stdout") == 0) {
+	if (strcmp(filename, "stdout") == 0)
+	{
 		fp = stdout;
 	}
-	else {
+	else
+	{
 		fp = fopen(filename, "w");
 	}
-	if (fp == NULL) {
+	if (fp == NULL)
+	{
 		printf("open file error!\n");
 		return;
 	}
 
-	for (int i = 0; i < IRlength; i++) {
+	for (int i = 0; i < IRlength; i++)
+	{
 		InterCode ir = IRList[i];
-		if (ir == NULL) {
+		if (ir == NULL)
+		{
 			continue;
 		}
-		switch (ir->kind) {
+		switch (ir->kind)
+		{
 		case LABEL_IR:
 			fputs("LABEL ", fp);
 			writeOp(ir->u.singleOP.op, fp);
 			fputs(" : ", fp);
 			break;
-		case  FUNCTION_IR:
+		case FUNCTION_IR:
 			fputs("FUNCTION ", fp);
 			writeOp(ir->u.singleOP.op, fp);
 			fputs(" : ", fp);
@@ -178,18 +188,21 @@ void writeCode(char *filename) {
 	fclose(fp);
 }
 
-void writeOp(Operand op, FILE *fp) {
-	if (op == NULL) {
+void writeOp(Operand op, FILE *fp)
+{
+	if (op == NULL)
+	{
 		fputs("t0	", fp);
 		return;
 	}
 	char str[50];
 	memset(str, 0, sizeof(str));
 
-	switch (op->kind) {
-		//enum {VARIABLE_OP, TEMP_VAR_OP, CONSTANT_OP, ADDRESS_OP, TEMP_ADDR_OP, LABEL_OP, FUNCTION_OP } kind;
+	switch (op->kind)
+	{
 	case VARIABLE_OP:
-		if (op->u.value != NULL) {
+		if (op->u.value != NULL)
+		{
 			sprintf(str, "%s", op->u.value);
 			fputs(str, fp);
 		}
@@ -223,8 +236,4 @@ void writeOp(Operand op, FILE *fp) {
 		fputs(str, fp);
 		break;
 	}
-}
-
-void optimize() {
-
 }

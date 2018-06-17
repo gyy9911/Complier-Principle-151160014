@@ -7,50 +7,57 @@
 #include "tree.h"
 #include "intercode.h"
 
-#define HASH_SIZE 65536  
+#define HASH_SIZE 65536
 
 #define INT_TYPE 1
 #define FLOAT_TYPE 2
 
 typedef enum Kind_ {
-	BASIC, ARRAY, STRUCTURE, FUNCTION_S
-}Kind;
+	BASIC,
+	ARRAY,
+	STRUCTURE,
+	FUNCTION_S
+} Kind;
 
 typedef struct Type_t *TypePtr;
 typedef struct FieldList_t *FieldList;
 
-typedef struct Type_t {
+typedef struct Type_t
+{
 
 	Kind kind;
-	union{
+	union {
 		//basic type
 		int basic_;
 
 		//array type
-		struct {
+		struct
+		{
 			int size;
 			TypePtr elem;
-		}array_;
+		} array_;
 
 		//structure type
 		FieldList structure_;
 
 		//function type
-		struct{
-			FieldList params;//函数的参数
-			TypePtr funcType;//返回值类型
-			int paramNum;//参数数量
-		}function_;
-	}u;
-}Type_t;
+		struct
+		{
+			FieldList params; //函数的参数
+			TypePtr funcType; //返回值类型
+			int paramNum;	 //参数数量
+		} function_;
+	} u;
+} Type_t;
 
-typedef struct FieldList_t {
+typedef struct FieldList_t
+{
 	char *name;
 	TypePtr type;
 	FieldList tail;
 	int collision;
 	int is_in_params;
-}FieldList_t;
+} FieldList_t;
 
 void traverseTree(Node *root);
 
@@ -58,25 +65,25 @@ TypePtr Specifier(Node *root);
 void ExtDefList(Node *root);
 
 FieldList VarDec(Node *root, TypePtr basictype, int from);
-void CompSt(Node *root,TypePtr funcType);
+void CompSt(Node *root, TypePtr funcType);
 
-void Stmt(Node *root,TypePtr funcType);
-TypePtr Exp(Node* root, Operand op);
+void Stmt(Node *root, TypePtr funcType);
+TypePtr Exp(Node *root, Operand op);
 
 int getSize(TypePtr typ, int t);
 
 void DefList(Node *root);
-FieldList Def(Node* root, int from);
+FieldList Def(Node *root, int from);
 FieldList DecList(Node *root, TypePtr type, int from);
 FieldList Dec(Node *root, TypePtr type, int from);
 
 unsigned int hash_pjw(char *name);
 void initHashtable();
 int insertSymbol(FieldList f);
-int TypeEqual(TypePtr type1,TypePtr type2);
-FieldList lookupSymbol(char *name,int function);//function 1,varible 0
+int TypeEqual(TypePtr type1, TypePtr type2);
+FieldList lookupSymbol(char *name, int function); //function 1,varible 0
 void AllSymbol();
 
-int Args(Node* root, Operand argsList);
-TypePtr Cond(Node* root, Operand left, Operand right);
+int Args(Node *root, Operand argsList);
+TypePtr Cond(Node *root, Operand left, Operand right);
 #endif
