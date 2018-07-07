@@ -11,13 +11,13 @@ int argsnum = 0;
 
 #define REG_NUM 32
 #define CAN_USE 20
-RegDescipter Regs[REG_NUM];
-VarDescipter *VarList = NULL;
-StkDescipter Stack;
+RegDesciptor Regs[REG_NUM];
+VarDesciptor *VarList = NULL;
+StkDesciptor Stack;
 
 void storeAllVar(FILE *fp)
 {
-	VarDescipter *var = VarList;
+	VarDesciptor *var = VarList;
 	while (var != NULL)
 	{
 		if (var->reg_no >= 0)
@@ -40,7 +40,7 @@ void storeAllVar(FILE *fp)
 
 void loadAllVar(FILE *fp)
 {
-	VarDescipter *var = VarList;
+	VarDesciptor *var = VarList;
 	while (var != NULL)
 	{
 		VarList = var->next;
@@ -49,7 +49,7 @@ void loadAllVar(FILE *fp)
 	}
 	for (int i = Stack.length - 1; i >= 0; i--)
 	{
-		VarDescipter *var = Stack.varstack[i];
+		VarDesciptor *var = Stack.varstack[i];
 		if (var == NULL)
 		{
 			continue;
@@ -72,7 +72,7 @@ int getReg(Operand op, FILE *fp)
 	char name[4];
 	memset(name, 0, sizeof(name));
 
-	VarDescipter *var = VarList;
+	VarDesciptor *var = VarList;
 	while (var != NULL)
 	{
 		if (op->kind == TEMP_VAR_OP && var->op->u.tvar_no == op->u.tvar_no)
@@ -90,8 +90,8 @@ int getReg(Operand op, FILE *fp)
 
 	if (var == NULL)
 	{
-		var = (VarDescipter *)malloc(sizeof(VarDescipter));
-		memset(var, 0, sizeof(VarDescipter));
+		var = (VarDesciptor *)malloc(sizeof(VarDesciptor));
+		memset(var, 0, sizeof(VarDesciptor));
 		var->op = op;
 		var->reg_no = -1;
 		if (op->kind == TEMP_VAR_OP || op->kind == VARIABLE_OP)
@@ -477,7 +477,7 @@ void irToObject(InterCode ir, int ith, FILE *fp)
 			fputs("  addi $sp, $sp, 20\n", fp);
 		}
 		argsnum = 0;
-		//ȡv0�Ĵ����еķ���ֵ
+		//取v0寄存器中的返回值
 		int reg_no = getReg(ir->u.doubleOP.left, fp);
 		memset(str, 0, sizeof(str));
 		sprintf(str, "  move %s, $v0\n", Regs[reg_no].name);
@@ -490,7 +490,7 @@ void irToObject(InterCode ir, int ith, FILE *fp)
 		sprintf(str, "\n%s:\n", ir->u.singleOP.op->u.value);
 		fputs(str, fp);
 
-		VarDescipter *var = VarList;
+		VarDesciptor *var = VarList;
 		while (var != NULL)
 		{
 			VarList = var->next;
@@ -550,7 +550,7 @@ void writeAllObject(FILE *fp)
 		Regs[i].var = NULL;
 		Regs[i].old = 0;
 	}
-	//0-19��ʹ��
+	//0-19可使用
 	strcpy(Regs[0].name, "$t0");
 	strcpy(Regs[1].name, "$t1");
 	strcpy(Regs[2].name, "$t2");
@@ -570,27 +570,26 @@ void writeAllObject(FILE *fp)
 	strcpy(Regs[16].name, "$s6");
 	strcpy(Regs[17].name, "$s7");
 	strcpy(Regs[18].name, "$v1");
-
 	strcpy(Regs[19].name, "$fp");
 
-	//����ʹ��,������ͺ������������
+	//保留使用,无数组和函数调用情况下
 	strcpy(Regs[20].name, "$a0");
 	strcpy(Regs[21].name, "$a1");
 	strcpy(Regs[22].name, "$a2");
 	strcpy(Regs[23].name, "$a3");
-	strcpy(Regs[24].name, "$v0"); //$v0 ��ź�������ֵ
+	strcpy(Regs[24].name, "$v0"); //$v0 存放函数返回值
 
-	//25-31 ����ʹ��
-	strcpy(Regs[25].name, "$ra");   //$ra ���溯�����ص�ַ
-	strcpy(Regs[26].name, "$gp");   //$gp ��̬���ݶ�ָ��
-	strcpy(Regs[27].name, "$sp");   //$sp ջָ��
-	strcpy(Regs[28].name, "$k0");   //$k0 �жϴ�����
-	strcpy(Regs[29].name, "$k1");   //$k1 �жϴ�����
-	strcpy(Regs[30].name, "$at");   //$at ���������
-	strcpy(Regs[31].name, "$zero"); //$zero ����0�Ĵ���
+	//25-31不能使用
+	strcpy(Regs[25].name, "$ra");   //$ra 保存函数返回地址
+	strcpy(Regs[26].name, "$gp");   //$gp 静态数据段指针
+	strcpy(Regs[27].name, "$sp");   //$sp 栈指针
+	strcpy(Regs[28].name, "$k0");   //$k0 中断处理保留
+	strcpy(Regs[29].name, "$k1");   //$k1 中断处理保留
+	strcpy(Regs[30].name, "$at");   //$at 汇编器保留
+	strcpy(Regs[31].name, "$zero"); //$zero 常数0
 
 	fputs(".data\n", fp);
-	fputs("_prompt: .asciiz \"Enter an integer:\"\n", fp);
+	fputs("_prompt: .asciiz \"Enter an integer:\"\n", fp);//read（）的提示字
 	fputs("_ret: .asciiz \"\\n\"\n", fp);
 	fputs(".globl main\n", fp);
 	fputs(".text\n\n", fp);

@@ -36,7 +36,7 @@ int main(int argc, char **argv)
 	}
 	if (!fp)
 	{
-		printf("cant't open the test file.\n\n");
+		printf("can't open file！\n\n");
 		perror(argv[1]);
 		return 1;
 	}

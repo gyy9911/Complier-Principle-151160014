@@ -9,25 +9,25 @@
 
 typedef struct Var_t
 {
-	int reg_no;
-	Operand op;
+	int reg_no;		//寄存器编号
+	Operand op;		// 操作符类型
 	struct Var_t *next;
-} VarDescipter;
+} VarDesciptor;
 
-typedef struct RegDescipter
+typedef struct RegDesciptor
 { 
-	char name[6];
-	int old;
+	char name[6];		//寄存器名
+	int old;		//存储的时间
 	struct Var_t *var;
-} RegDescipter;
+} RegDesciptor;
 
-typedef struct StkDescipter
+typedef struct StkDesciptor
 {
 	int length;
 	int from;
 	int old[1024];
-	VarDescipter *varstack[1024];
-} StkDescipter;
+	VarDesciptor *varstack[1024];
+} StkDesciptor;
 
 void writeAllObject(FILE *fp);
 
